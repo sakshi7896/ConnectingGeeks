@@ -3,10 +3,6 @@
     <option name="visitedUrls">
       <list>
         <UrlAndUserName>
-          <option name="url" value="http://gitlab.com" />
-          <option name="userName" value="developer@utopiatech.co" />
-        </UrlAndUserName>
-        <UrlAndUserName>
           <option name="url" value="https://github.com/sakshi7896/ConnectingGeeks.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
