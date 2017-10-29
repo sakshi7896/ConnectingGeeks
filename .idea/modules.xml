@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ConnectingGeeks.iml" filepath="$PROJECT_DIR$/ConnectingGeeks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/connectinggeeksapp/connectinggeeksapp.iml" filepath="$PROJECT_DIR$/connectinggeeksapp/connectinggeeksapp.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="D:\Android_Test\ConnectingGeeks\ConnectingGeeks\connectinggeeksapp\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="D:\Android_Test\ConnectingGeeks\ConnectingGeeks\connectinggeeksapp\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_996f13c076f8742e1e45233589124803565e9fc2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Android_Test\ConnectingGeeks\ConnectingGeeks\connectinggeeksapp\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="28f70d6a81f31719a910a47e1ce34c754e55aeff">
+        <dex dex="D:\Android_Test\ConnectingGeeks\ConnectingGeeks\connectinggeeksapp\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_d9612076311855d8e00cddf32980353820880136\classes.dex" />
+    </item>
+
+</items>
