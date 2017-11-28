@@ -13,13 +13,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Press Here"
         app:layout_constraintTop_toBottomOf="@+id/textview"
         tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="285dp" />
+        tools:layout_editor_absoluteY="285dp"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press Here"
+        app:layout_constraintTop_toBottomOf="@+id/button1"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="285dp"
+        tools:ignore="MissingConstraints" />
 
 
 </android.support.constraint.ConstraintLayout>
