@@ -2,4 +2,8 @@
     <string name="app_name">ConnectingGeeksApp</string>
     <string name="title_activity_1">Activity1</string>
     <string name="title_activity_2">Activity2</string>
+    <string name="Hackathons">Hackathons</string>
+    <string name="Coding">Coding</string>
+    <string name="Workshops">Workshops</string>
+    <string name="Add">Add</string>
 </resources>

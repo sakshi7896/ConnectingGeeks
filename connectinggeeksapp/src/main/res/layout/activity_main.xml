@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<android.widget.RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.learnit.sakshi.connectinggeeksapp.MainActivity">
@@ -18,36 +17,43 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Workshops"
+        android:text="@string/Workshops"
+        android:layout_marginTop="@dimen/fab_margin"
 
-        android:background="@color/colorAccent"
-        tools:layout_editor_absoluteX="36dp"
-        app:layout_editor_absoluteY="80dp"/>
+
+        />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hackathons"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_alignParentRight="true"
+        android:text="@string/Hackathons"
 
-
-        tools:layout_editor_absoluteX="217dp"
-        app:layout_editor_absoluteY="80dp"/>
+        />
 
     <Button
-        android:id="@+id/b3"
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coding"
+        android:text="@string/Coding"
+        android:layout_marginVertical="@dimen/fab_margin"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/button2"
 
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="175dp" />
+       />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/b4"
-        android:text="Add"
-        app:layout_editor_absoluteY="275dp"
-        app:layout_editor_absoluteX="146dp"/>
+        android:id="@+id/button4"
+        android:layout_below="@id/button3"
+        android:layout_marginTop="@dimen/fab_margin"
 
-</android.support.constraint.ConstraintLayout>
+        android:layout_centerInParent="true"
+        android:text="@string/Add"
+
+       />
+
+</android.widget.RelativeLayout>
