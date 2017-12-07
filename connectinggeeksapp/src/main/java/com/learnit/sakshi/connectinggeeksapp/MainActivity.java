@@ -1,5 +1,7 @@
 package com.learnit.sakshi.connectinggeeksapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,12 +16,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final TextView t= (TextView)findViewById(R.id.textview);
-        Button b = (Button) findViewById(R.id.button);
-        b.setOnClickListener(new View.OnClickListener() {
+//        final TextView t= (TextView)findViewById(R.id.textview);
+        Button b1 = (Button) findViewById(R.id.button1);
+        Button b2 = (Button)findViewById(R.id.button2);
+        Button b3 = (Button)findViewById(R.id.button3);
+        Button b4=  (Button)findViewById(R.id.button4);
+        final Activity activity=this;
+        b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                t.setText("Button Pressed");
+//                t.setText("Button Pressed345");
+
+                Intent intent = new Intent(activity, Activity1.class);
+                startActivity(intent);
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i= new Intent(activity,Activity2.class);
+                startActivity(i);
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i=new Intent(activity, Activity3.class);
+                startActivity(i);
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(activity,Activity4.class);
+                startActivity(i);
             }
         });
     }
