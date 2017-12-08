@@ -38,7 +38,8 @@ private DatabaseReference mdatabase;
         mcardList.setHasFixedSize(true);
 
         mcardList.setLayoutManager(new LinearLayoutManager(this));
-        FirebaseRecyclerOptions cardOptions = new FirebaseRecyclerOptions.Builder<Card>().setQuery(personsQuery, Card.class).build();
+       FirebaseRecyclerOptions cardOptions = new FirebaseRecyclerOptions.Builder<Card>().setQuery(personsQuery, Card.class).build();
+
         mfirebaseadapter = new FirebaseRecyclerAdapter<Card, CardViewHolder>(cardOptions) {
             @Override
             protected void onBindViewHolder(CardViewHolder holder, int position, Card model) {
