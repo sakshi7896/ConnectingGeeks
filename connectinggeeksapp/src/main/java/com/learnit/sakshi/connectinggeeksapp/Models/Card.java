@@ -1,4 +1,4 @@
-package com.learnit.sakshi.connectinggeeksapp;
+package com.learnit.sakshi.connectinggeeksapp.Models;
 
 /**
  * Created by Sakshi Jain on 08-12-2017.

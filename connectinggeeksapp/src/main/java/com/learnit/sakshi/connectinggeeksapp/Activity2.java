@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+//import com.google.firebase.iid.FirebaseInstanceIdReceiver;
 import com.learnit.sakshi.connectinggeeksapp.Models.descriptionFlashCard;
 
 public class Activity2 extends AppCompatActivity {
