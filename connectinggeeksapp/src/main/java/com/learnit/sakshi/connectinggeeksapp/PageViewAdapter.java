@@ -10,6 +10,10 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 
 public class PageViewAdapter extends FragmentPagerAdapter {
+    private String[] tabNames = { "Hackathons", "Workshops", "Coding"};
+
+
+
     public PageViewAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -19,13 +23,11 @@ public class PageViewAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                return new EventFragment();
+                return HackathonFragment.newInstance(tabNames[position],"");
             case 1:
-                return null;
+                return WorkshopFragment.newInstance(tabNames[position],"");
             case 2:
-                return  null;
-            case 3:
-                return null;
+                return  CodingFragment.newInstance(tabNames[position],"");
             default:
                 return null;
         }
@@ -33,6 +35,14 @@ public class PageViewAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 1;
+        return tabNames.length;
+    }
+
+    public String[] getTabNames() {
+        return tabNames;
+    }
+
+    public void setTabNames(String[] tabNames) {
+        this.tabNames = tabNames;
     }
 }

@@ -6,10 +6,12 @@ package com.learnit.sakshi.connectinggeeksapp.Models;
 
 public class Card {
     private String title,desc;
+    private long timeStamp;
     public Card(){
 
     }
-    public Card(String title, String desc) {
+    public Card(long timeStamp, String title, String desc) {
+        this.timeStamp=timeStamp;
         this.title = title;
         this.desc = desc;
     }
@@ -28,5 +30,13 @@ public class Card {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

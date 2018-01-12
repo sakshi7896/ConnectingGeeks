@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context="com.learnit.sakshi.connectinggeeksapp.EventFragment">
+    tools:context="com.learnit.sakshi.connectinggeeksapp.HackathonFragment">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/card_list2">
+        android:id="@+id/card_list_coding">
 
     </android.support.v7.widget.RecyclerView>
 

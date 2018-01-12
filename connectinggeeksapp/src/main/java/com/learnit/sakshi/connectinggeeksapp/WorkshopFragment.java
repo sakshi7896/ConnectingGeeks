@@ -22,17 +22,17 @@ import com.learnit.sakshi.connectinggeeksapp.Models.Card;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link EventFragment.OnFragmentInteractionListener} interface
+ * {@link WorkshopFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link EventFragment#newInstance} factory method to
+ * Use the {@link WorkshopFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EventFragment extends Fragment {
+public class WorkshopFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private String eventType = "";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -43,10 +43,7 @@ public class EventFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-//    public EventFragment() {
-//        super();
-//        // Required empty public constructor
-//    }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -54,11 +51,11 @@ public class EventFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment EventFragment.
+     * @return A new instance of fragment HackathonFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static EventFragment newInstance(String param1, String param2) {
-        EventFragment fragment = new EventFragment();
+    public static WorkshopFragment newInstance(String param1, String param2) {
+        WorkshopFragment fragment = new WorkshopFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,6 +69,7 @@ public class EventFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            eventType=mParam1;
         }
     }
 
@@ -79,11 +77,11 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_event, container, false);
+        View view= inflater.inflate(R.layout.fragment_workshop, container, false);
 
-        mdatabase= FirebaseDatabase.getInstance().getReference().child("Blog");
+        mdatabase= FirebaseDatabase.getInstance().getReference().child("Blog").child(eventType);
         Query personsQuery = mdatabase.orderByKey();
-        mcardList=(RecyclerView) view.findViewById(R.id.card_list2);
+        mcardList=(RecyclerView) view.findViewById(R.id.card_list_workshop);
         mcardList.setHasFixedSize(true);
 
         mcardList.setLayoutManager(new LinearLayoutManager(getActivity()));
