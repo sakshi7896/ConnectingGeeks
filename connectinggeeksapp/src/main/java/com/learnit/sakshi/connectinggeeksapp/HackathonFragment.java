@@ -1,15 +1,18 @@
 package com.learnit.sakshi.connectinggeeksapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.learnit.sakshi.connectinggeeksapp.Models.Card;
+
+import java.util.Date;
 
 
 /**
@@ -94,9 +99,49 @@ public class HackathonFragment extends Fragment {
 
         mfirebaseadapter = new FirebaseRecyclerAdapter<Card, CardViewHolder>(cardOptions) {
             @Override
-            protected void onBindViewHolder(CardViewHolder holder, int position, Card model) {
+            protected void onBindViewHolder(final CardViewHolder holder, int position, Card model) {
+
                 holder.setTitle(model.getTitle());
                 holder.setDesc(model.getDesc());
+                holder.model = model;
+                holder.dataRef = this.getRef(position);
+                holder.mview.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                getContext());
+
+
+                        // set dialog message
+                        alertDialogBuilder
+                                .setTitle("Delete Event")
+                                .setMessage("You sure want to delete the event?")
+                                .setCancelable(false)
+                                .setPositiveButton("Delete",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                holder.dataRef.removeValue();
+
+                                            }
+                                        })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+
+                        return false;
+                    }
+                });
 
             }
 
@@ -104,6 +149,7 @@ public class HackathonFragment extends Fragment {
             public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 // return null;
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_row,parent,false);
+
                 return new CardViewHolder(view);
             }
         };
@@ -165,6 +211,8 @@ public class HackathonFragment extends Fragment {
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         View mview;
+        Card model;
+        DatabaseReference dataRef;
         public CardViewHolder(View itemView) {
             super(itemView);
 

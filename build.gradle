@@ -46,7 +46,7 @@ ext {
     testRunnerVersion = "0.4.1"
 
     // Dependency versions
-    playServicesVersion = '11.0.2'
+    playServicesVersion = '11.4.2'
     supportV4Version = '26.0.0-alpha1'
     appcompatV7Version = '26.0.0-alpha1'
     recyclerviewV7Version = '26.0.0-alpha1'

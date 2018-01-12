@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -139,8 +138,8 @@ public class Main2Activity extends AppCompatActivity implements ActionBar.TabLis
                             public void onClick(DialogInterface dialog,int id) {
                                 // get user input and set it to result
                                 // edit text
-                                String eventName = eventNameEditText.getText().toString();
-                                String eventDesc = eventDescEditText.getText().toString();
+                                String eventName = eventNameEditText.getText().toString().trim();
+                                String eventDesc = eventDescEditText.getText().toString().trim();
                                 if(eventName.length()==0 || eventDesc.length()==0)
                                     dialog.cancel();
 
@@ -149,8 +148,7 @@ public class Main2Activity extends AppCompatActivity implements ActionBar.TabLis
                                 String key = mdatabase.child(eventType).push().getKey();
                                 Card card = new Card(timeStamp,eventName,eventDesc);
                                 mdatabase.child(eventType).child(key).setValue(card);
-//                                Toast.makeText(context, "Add Event "+event+ " : "+eventName + " : "+eventDesc, Toast.LENGTH_SHORT)
-//                                        .show();
+
                             }
                         })
                 .setNegativeButton("Cancel",
