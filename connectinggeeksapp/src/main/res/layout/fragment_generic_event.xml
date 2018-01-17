@@ -5,19 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:visibility="visible"
     tools:context="com.learnit.sakshi.connectinggeeksapp.event.GenericEventFragment">
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/card_list_hackathon"
-        android:layout_alignRight="@id/card_list_hackathon"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/card_list_hackathon">
+        android:id="@+id/event_card_list_hackathon">
 
     </android.support.v7.widget.RecyclerView>
 

@@ -25,21 +25,22 @@ public class MainActivity extends AppCompatActivity
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         auth = FirebaseAuth.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null) {
-            // user auth state is changed - user is null
-            // launch login activity
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
+            Intent intent = new Intent(this,LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+            startActivity(intent);
+            this.finish();
         }
 
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -47,10 +48,10 @@ public class MainActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
+                    Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                    startActivity(intent);
+                    MainActivity.this.finish();
                 }
             }
         };
@@ -73,10 +74,12 @@ public class MainActivity extends AppCompatActivity
 
         userName.setText(user.getDisplayName());
         userEmailId.setText(user.getEmail());
-        getFragmentManager()
+        toolbar.setTitle("All Events");
+        getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragmentParentViewGroup, new EventWrapperFragment())
+                .replace(R.id.fragmentParentViewGroup, new EventWrapperFragment())
                 .commit();
+        toolbar.setTitle("All Events");
     }
 
     @Override
@@ -118,14 +121,19 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_events) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentParentViewGroup, new EventWrapperFragment())
+                    .addToBackStack(null)
                     .commit();
+            toolbar.setTitle("All Events");
         } else if (id == R.id.nav_manage) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentParentViewGroup, new UserEventWrapperFragment())
+                    .addToBackStack(null)
                     .commit();
+            toolbar.setTitle("Your Events");
         } else if (id == R.id.nav_change_pass) {
+            toolbar.setTitle("Edit Profile");
 //            progressBar.setVisibility(View.VISIBLE);
 //            if (user != null && !newPassword.getText().toString().trim().equals("")) {
 //                if (newPassword.getText().toString().trim().length() < 6) {

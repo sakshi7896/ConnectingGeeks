@@ -7,12 +7,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.learnit.sakshi.connectinggeeksapp.MainActivity"
     tools:showIn="@layout/app_bar_main">
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/fragmentParentViewGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
 
-    </RelativeLayout>
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

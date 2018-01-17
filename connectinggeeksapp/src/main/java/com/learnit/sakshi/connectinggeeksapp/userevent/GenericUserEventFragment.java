@@ -64,7 +64,7 @@ public class GenericUserEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_generic_user_event, container, false);
-        fab = (FloatingActionButton)view.findViewById(R.id.fab);
+        fab = (FloatingActionButton)view.findViewById(R.id.user_event_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,10 +74,10 @@ public class GenericUserEventFragment extends Fragment {
         mdatabase= FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child(eventType);
         Query personsQuery = mdatabase.orderByKey();
         DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference().child("Blog").child(eventType);
-        mcardList=(RecyclerView) view.findViewById(R.id.card_list_hackathon);
+        mcardList=(RecyclerView) view.findViewById(R.id.user_event_card_list_hackathon);
         mcardList.setHasFixedSize(true);
 
-        mcardList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mcardList.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions cardOptions = new FirebaseRecyclerOptions.Builder<Card>().setIndexedQuery(personsQuery,dataRef, Card.class).build();
 
         mfirebaseadapter = new FirebaseRecyclerAdapter<Card, CardViewHolder>(cardOptions) {
@@ -92,44 +92,7 @@ public class GenericUserEventFragment extends Fragment {
                     @Override
                     public boolean onLongClick(View view) {
 
-
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                                getContext());
-
-
-                        // set dialog message
-                        alertDialogBuilder
-                                .setTitle("Delete Event")
-                                .setMessage("You sure want to delete the event?")
-                                .setCancelable(false)
-                                .setPositiveButton("Update",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                //TODO : Add update query
-                                                dialog.cancel();
-
-                                            }
-                                        })
-                                .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        holder.dataRef.removeValue();
-
-                                    }
-                                })
-                                .setNegativeButton("Cancel",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                dialog.cancel();
-                                            }
-                                        });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-
-                        // show it
-                        alertDialog.show();
-
+                        editEvent(holder.model,holder.dataRef);
                         return false;
                     }
                 });
@@ -144,36 +107,124 @@ public class GenericUserEventFragment extends Fragment {
                 return new CardViewHolder(view);
             }
         };
+
         mcardList.setAdapter(mfirebaseadapter);
         return view;
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
-        mfirebaseadapter.startListening();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mfirebaseadapter.stopListening();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.stopListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.startListening();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.stopListening();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.startListening();
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mfirebaseadapter.stopListening();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.stopListening();
 
     }
 
-    public  void addNewEvent(final String eventType)
+    private void editEvent(final Card model, final DatabaseReference dataRef) {
+
+        final Context context = getContext();
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.add_event_dialog, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText eventNameEditText = (EditText) promptsView
+                .findViewById(R.id.add_event_name);
+
+        final EditText eventDescEditText = (EditText) promptsView
+                .findViewById(R.id.add_event_desc);
+
+        eventNameEditText.setText(model.getTitle());
+        eventDescEditText.setText(model.getDesc());
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Edit",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                String eventName = eventNameEditText.getText().toString().trim();
+                                String eventDesc = eventDescEditText.getText().toString().trim();
+                                if(eventName.length()==0 || eventDesc.length()==0)
+                                    dialog.cancel();
+
+                                long timeStamp = new Date().getTime();
+                                model.setTitle(eventName);
+                                model.setDesc(eventDesc);
+                                model.setTimeStamp(timeStamp);
+                                String key = dataRef.getKey();
+
+                                dataRef.setValue(model);
+//                                mdatabase.child("Users").child(uid).child(eventType).child(key).setValue(timeStamp);
+
+                            }
+                        })
+                .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mdatabase.child("Users").child(uid).child(eventType).child(dataRef.getKey()).removeValue();
+                        dataRef.removeValue();
+
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+    private  void addNewEvent(final String eventType)
     {
         final Context context = getContext();
         LayoutInflater li = LayoutInflater.from(context);

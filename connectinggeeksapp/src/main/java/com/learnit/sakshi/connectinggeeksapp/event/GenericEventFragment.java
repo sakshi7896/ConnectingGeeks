@@ -37,7 +37,6 @@ public class GenericEventFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private FloatingActionButton fab;
     private RecyclerView mcardList;
     private DatabaseReference mdatabase;
     private FirebaseRecyclerAdapter<Card, CardViewHolder> mfirebaseadapter;
@@ -71,25 +70,19 @@ public class GenericEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_generic_event, container, false);
-        fab = (FloatingActionButton)view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNewEvent(eventType);
-            }
-        });
+
         mdatabase= FirebaseDatabase.getInstance().getReference().child("Blog").child(eventType);
         Query personsQuery = mdatabase.orderByKey();
 
-        mcardList=(RecyclerView) view.findViewById(R.id.card_list_hackathon);
-        mcardList.setHasFixedSize(true);
+        mcardList=(RecyclerView) view.findViewById(R.id.event_card_list_hackathon);
+//        mcardList.setHasFixedSize(true);
 
         mcardList.setLayoutManager(new LinearLayoutManager(getActivity()));
         FirebaseRecyclerOptions cardOptions = new FirebaseRecyclerOptions.Builder<Card>().setQuery(personsQuery, Card.class).build();
 
         mfirebaseadapter = new FirebaseRecyclerAdapter<Card, CardViewHolder>(cardOptions) {
             @Override
-            protected void onBindViewHolder(final CardViewHolder holder, int position, Card model) {
+            protected void onBindViewHolder(final CardViewHolder holder, int position, final Card model) {
 
                 holder.setTitle(model.getTitle());
                 holder.setDesc(model.getDesc());
@@ -106,20 +99,14 @@ public class GenericEventFragment extends Fragment {
 
                         // set dialog message
                         alertDialogBuilder
-                                .setTitle("Delete Event")
-                                .setMessage("You sure want to delete the event?")
-                                .setCancelable(false)
-                                .setPositiveButton("Delete",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                holder.dataRef.removeValue();
-
-                                            }
-                                        })
-                                .setNegativeButton("Cancel",
+                                .setTitle("Event Details : ")
+                                .setMessage("Posted by : "+model.getUserName()+"\n Posted On : "+model.getTimeStamp())
+                                .setCancelable(true)
+                                .setPositiveButton("Ok",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog,int id) {
                                                 dialog.cancel();
+
                                             }
                                         });
 
@@ -150,83 +137,48 @@ public class GenericEventFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mfirebaseadapter.startListening();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mfirebaseadapter.stopListening();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.stopListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.startListening();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.stopListening();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.startListening();
 
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mfirebaseadapter.stopListening();
+        if(mfirebaseadapter!=null)
+            mfirebaseadapter.stopListening();
 
     }
 
-    public  void addNewEvent(final String eventType)
-    {
-        final Context context = getContext();
-        LayoutInflater li = LayoutInflater.from(context);
-        View promptsView = li.inflate(R.layout.add_event_dialog, null);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
-
-        // set prompts.xml to alertdialog builder
-        alertDialogBuilder.setView(promptsView);
-
-        final EditText eventNameEditText = (EditText) promptsView
-                .findViewById(R.id.add_event_name);
-
-        final EditText eventDescEditText = (EditText) promptsView
-                .findViewById(R.id.add_event_desc);
-
-        // set dialog message
-        alertDialogBuilder
-                .setCancelable(false)
-                .setPositiveButton("Add Event",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // get user input and set it to result
-                                // edit text
-                                String eventName = eventNameEditText.getText().toString().trim();
-                                String eventDesc = eventDescEditText.getText().toString().trim();
-                                if(eventName.length()==0 || eventDesc.length()==0)
-                                    dialog.cancel();
-
-                                DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference();
-                                long timeStamp = new Date().getTime();
-                                String key = mdatabase.child(eventType).push().getKey();
-                                String uid = firebaseUser.getUid();
-                                Card card = new Card(timeStamp,eventName,eventDesc,firebaseUser.getDisplayName());
-                                DatabaseReference ref = mdatabase.child("Blog").child(eventType).child(key);
-                                ref.setValue(card);
-                                mdatabase.child("Users").child(uid).child(eventType).child(key).setValue(timeStamp);
-
-                            }
-                        })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
-    }
 
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {

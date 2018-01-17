@@ -2,7 +2,7 @@ package com.learnit.sakshi.connectinggeeksapp.event;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -29,11 +29,10 @@ public class EventWrapperFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_event_wrapper, container, false);
 
-        AppCompatActivity parentActivity = (AppCompatActivity)getActivity();
-        viewPager = (ViewPager) view.findViewById(R.id.pagerTabView);
-        tabPagerAdapter = new EventPageViewAdapter(parentActivity.getSupportFragmentManager());
+        viewPager = (ViewPager) view.findViewById(R.id.event_pagerTabView);
+        tabPagerAdapter = new EventPageViewAdapter(getChildFragmentManager());
         viewPager.setAdapter(tabPagerAdapter);
-        TabLayout tabPageLayout= (TabLayout) view.findViewById(R.id.tab_page_layout);
+        TabLayout tabPageLayout= (TabLayout) view.findViewById(R.id.event_tab_page_layout);
         tabPageLayout.setupWithViewPager(viewPager);
 
 
