@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -24,8 +26,9 @@ import com.google.firebase.database.Query;
 import com.learnit.sakshi.connectinggeeksapp.models.Card;
 import com.learnit.sakshi.connectinggeeksapp.R;
 
+import java.util.Calendar;
 import java.util.Date;
-
+import java.util.Locale;
 
 
 public class GenericEventFragment extends Fragment {
@@ -79,7 +82,7 @@ public class GenericEventFragment extends Fragment {
 
         mcardList.setLayoutManager(new LinearLayoutManager(getActivity()));
         FirebaseRecyclerOptions cardOptions = new FirebaseRecyclerOptions.Builder<Card>().setQuery(personsQuery, Card.class).build();
-
+        final ProgressBar mProgressDialog = (ProgressBar) view.findViewById(R.id.event_progress_bar);
         mfirebaseadapter = new FirebaseRecyclerAdapter<Card, CardViewHolder>(cardOptions) {
             @Override
             protected void onBindViewHolder(final CardViewHolder holder, int position, final Card model) {
@@ -96,11 +99,13 @@ public class GenericEventFragment extends Fragment {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                 getContext());
 
-
+                        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+                        cal.setTimeInMillis(model.getTimeStamp());
+                        String date = DateFormat.format("dd-MMM-yyyy HH:mm", cal).toString();
                         // set dialog message
                         alertDialogBuilder
                                 .setTitle("Event Details : ")
-                                .setMessage("Posted by : "+model.getUserName()+"\n Posted On : "+model.getTimeStamp())
+                                .setMessage("Posted by : "+model.getUserName()+"\nPosted On : "+date)
                                 .setCancelable(true)
                                 .setPositiveButton("Ok",
                                         new DialogInterface.OnClickListener() {
@@ -128,6 +133,13 @@ public class GenericEventFragment extends Fragment {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_row,parent,false);
 
                 return new CardViewHolder(view);
+            }
+
+            @Override
+            public void onDataChanged() {
+                if (mProgressDialog != null) {
+                    mProgressDialog.setVisibility(View.GONE);
+                }
             }
         };
         mcardList.setAdapter(mfirebaseadapter);

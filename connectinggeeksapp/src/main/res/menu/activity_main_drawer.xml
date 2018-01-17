@@ -6,24 +6,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_events"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_events_black_24dp"
             android:title="Events" />
 
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_user_event_black_24dp"
             android:title="Your Events" />
     </group>
 
     <item android:title="Account">
         <menu>
             <item
-                android:id="@+id/nav_change_pass"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Change Password" />
+                android:id="@+id/nav_edit_profile"
+                android:icon="@drawable/ic_edit_profile_24dp"
+                android:title="Edit Profile" />
             <item
                 android:id="@+id/nav_account_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_signout_black_24dp"
                 android:title="Logout" />
         </menu>
     </item>

@@ -2,6 +2,7 @@ package com.learnit.sakshi.connectinggeeksapp.userevent;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -76,7 +78,7 @@ public class GenericUserEventFragment extends Fragment {
         DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference().child("Blog").child(eventType);
         mcardList=(RecyclerView) view.findViewById(R.id.user_event_card_list_hackathon);
         mcardList.setHasFixedSize(true);
-
+        final ProgressBar mProgressDialog = (ProgressBar) view.findViewById(R.id.user_event_progress_bar);
         mcardList.setLayoutManager(new LinearLayoutManager(getContext()));
         FirebaseRecyclerOptions cardOptions = new FirebaseRecyclerOptions.Builder<Card>().setIndexedQuery(personsQuery,dataRef, Card.class).build();
 
@@ -106,6 +108,14 @@ public class GenericUserEventFragment extends Fragment {
 
                 return new CardViewHolder(view);
             }
+
+            @Override
+            public void onDataChanged() {
+                if (mProgressDialog != null) {
+                    mProgressDialog.setVisibility(View.GONE);
+                }
+            }
+
         };
 
         mcardList.setAdapter(mfirebaseadapter);

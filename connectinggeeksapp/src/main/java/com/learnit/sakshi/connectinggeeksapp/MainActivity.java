@@ -123,43 +123,22 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_events) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentParentViewGroup, new EventWrapperFragment())
-                    .addToBackStack(null)
+//                    .addToBackStack(null)
                     .commit();
             toolbar.setTitle("All Events");
         } else if (id == R.id.nav_manage) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentParentViewGroup, new UserEventWrapperFragment())
-                    .addToBackStack(null)
+//                    .addToBackStack(null)
                     .commit();
             toolbar.setTitle("Your Events");
-        } else if (id == R.id.nav_change_pass) {
+        } else if (id == R.id.nav_edit_profile) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentParentViewGroup, new UserProfileFragment())
+//                    .addToBackStack(null)
+                    .commit();
             toolbar.setTitle("Edit Profile");
-//            progressBar.setVisibility(View.VISIBLE);
-//            if (user != null && !newPassword.getText().toString().trim().equals("")) {
-//                if (newPassword.getText().toString().trim().length() < 6) {
-//                    newPassword.setError("Password too short, enter minimum 6 characters");
-//                    progressBar.setVisibility(View.GONE);
-//                } else {
-//                    user.updatePassword(newPassword.getText().toString().trim())
-//                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<Void> task) {
-//                                    if (task.isSuccessful()) {
-//                                        Toast.makeText(MainActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
-//                                        signOut();
-//                                        progressBar.setVisibility(View.GONE);
-//                                    } else {
-//                                        Toast.makeText(MainActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
-//                                        progressBar.setVisibility(View.GONE);
-//                                    }
-//                                }
-//                            });
-//                }
-//            } else if (newPassword.getText().toString().trim().equals("")) {
-//                newPassword.setError("Enter password");
-//                progressBar.setVisibility(View.GONE);
-//            }
-//        }
+
 
         } else if (id == R.id.nav_account_logout) {
             auth.signOut();
